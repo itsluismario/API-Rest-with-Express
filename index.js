@@ -7,19 +7,81 @@ app.get('/', (req, res) => {
   res.send('Hi, my server in express');
 });
 
+
+app.get('/users', (req, res) => {
+  res.json(
+    [
+      {
+        name: 'P1',
+        price: 338
+      },
+      {
+        name: 'P2',
+        price: 223
+      },
+    ]
+    )
+});
+
+
+
 app.get('/products', (req, res) => {
   res.json(
-    {
-      name: 'P1',
-      price: 23238
-    },
+    [
+      {
+        name: 'P1',
+        price: 338
+      },
+      {
+        name: 'P2',
+        price: 223
+      },
+    ]
     )
 });
 
 app.get('/categories', (req, res) => {
   res.json(
+    [
+      {
+        category: 'C1',
+      },
+      {
+        category: 'C2',
+      },
+    ]
+
+    )
+});
+
+app.get('/products/:id', (req, res) => {
+  const { id } = req.params;
+  res.json(
+      {
+        name: 'P1',
+        price: 338,
+        id,
+      },
+    )
+});
+
+app.get('/users/:id', (req, res) => {
+  const { id } = req.params;
+  res.json(
+      {
+        name: 'P1',
+        email: 'itsluismario@gmail.com',
+        id,
+      },
+    )
+});
+
+app.get('/categories/:categoryId/products/:productId', (req, res) => {
+  const { categoryId, productId } = req.params;
+  res.json(
     {
-      category: 'C1',
+      categoryId,
+      productId,
     },
     )
 });
