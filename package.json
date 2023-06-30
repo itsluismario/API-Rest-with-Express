@@ -20,6 +20,7 @@
   },
   "homepage": "https://github.com/itsluismario/API-Rest-with-Express#readme",
   "dependencies": {
+    "@faker-js/faker": "^8.0.2",
     "express": "^4.18.2"
   },
   "devDependencies": {

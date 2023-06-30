@@ -1,43 +1,40 @@
 const express = require('express');
 const app = express();
 const port = 3000;
+const { faker } = require('@faker-js/faker');
 
 // app has always two params
 app.get('/', (req, res) => {
   res.send('Hi, my server in express');
 });
 
-
 app.get('/users', (req, res) => {
-  res.json(
-    [
+  const { limit, offset } = req.query;
+  if (limit && offset) {
+    res.json(
       {
-        name: 'P1',
-        price: 338
-      },
-      {
-        name: 'P2',
-        price: 223
-      },
-    ]
-    )
+        limit,
+        offset
+      });
+  } else {
+    res.send('There is no params')
+  }
 });
 
-
-
 app.get('/products', (req, res) => {
-  res.json(
-    [
-      {
-        name: 'P1',
-        price: 338
-      },
-      {
-        name: 'P2',
-        price: 223
-      },
-    ]
-    )
+  const { size } = req.query;
+  const products = [];
+
+  const limit = size || 10;
+
+  for (let index = 0; index < limit; index++) {
+    products.push({
+      name: faker.commerce.productName(),
+      price: parseInt(faker.commerce.price(), 10),
+      image: faker.image.url(),
+    });
+  }
+    res.json(products);
 });
 
 app.get('/categories', (req, res) => {
@@ -52,6 +49,10 @@ app.get('/categories', (req, res) => {
     ]
 
     )
+});
+
+app.get('/products/filter', (req, res) => {
+  console.log('I am a product filter');
 });
 
 app.get('/products/:id', (req, res) => {
