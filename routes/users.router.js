@@ -1,30 +1,23 @@
 const express = require('express');
-const { faker } = require('@faker-js/faker');
 
+const UsersService = require('../services/users.service')
+
+// -- Service
+const service = new UsersService();
+
+// -- Router
 const router = express.Router();
 
+
 router.get('/', (req, res) => {
-  const { limit, offset } = req.query;
-  if (limit && offset) {
-    res.json(
-      {
-        limit,
-        offset
-      });
-  } else {
-    res.send('There is no params')
-  }
+  const users = service.find();
+  res.json(users);
 });
 
 router.get('/:id', (req, res) => {
   const { id } = req.params;
-  res.json(
-      {
-        name: 'P1',
-        email: 'itsluismario@gmail.com',
-        id,
-      },
-    )
+  const user = service.findOne(id);
+  res.json(user)
 });
 
 module.exports = router;
