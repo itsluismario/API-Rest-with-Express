@@ -20,4 +20,33 @@ router.get('/:id', (req, res) => {
   res.json(user)
 });
 
+router.post('/', (req, res) => {
+  const body = req.body;
+  const newUser = service.create(body);
+  res.status(201).json(newUser);
+})
+
+router.patch('/:id', (req, res) => {
+  const { id } = req.params;
+  const body = req.body;
+  const user = service.update(id, body);
+  res.json(user);
+});
+
+router.put('/:id', (req, res) => {
+  const { id } = req.params;
+  const body = req.body;
+  res.json({
+    message: 'updated',
+    data: body,
+    id,
+  });
+});
+
+router.delete('/:id', (req, res) => {
+  const { id } = req.params;
+  const response = service.delete(id);
+  res.json(response);
+});
+
 module.exports = router;
