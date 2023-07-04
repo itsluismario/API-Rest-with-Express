@@ -37,8 +37,13 @@ class CategoriesService {
     }
   }
 
-  create() {
-
+  create(data) {
+    const newCategory = {
+      id: faker.string.uuid(),
+        ...data
+    }
+    this.categories.push(newCategory);
+    return newCategory;
   }
 
   find() {
@@ -56,19 +61,33 @@ class CategoriesService {
       if (product) {
         return product
       } else {
-        return "Product not found."
+        throw Error("Product not found.")
       }
     } else {
-      return "Category not found."
+      throw Error("Category not found.")
     }
   }
 
-  update() {
-
+  update(id, changes) {
+    const index = this.categories.findIndex(cat => cat.categoryId === id);
+    if (index === -1) {
+      throw new Error('Category not found')
+      }
+    const category = this.categories[index];
+    this.categories[index] = {
+      ...category,
+      ...changes
+    }
+    return this.categories[index];
   }
 
-  delete() {
-
+  delete(id) {
+    const index = this.categories.findIndex(item => item.categoryId === id);
+    if (index === -1) {
+      throw new Error('Category not found')
+    }
+    this.categories.splice(index, 1)
+    return { id };
   }
 }
 
