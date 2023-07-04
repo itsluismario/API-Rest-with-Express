@@ -1,4 +1,5 @@
 const { faker } = require('@faker-js/faker');
+const boom = require('@hapi/boom');
 
 class CategoriesService {
 
@@ -61,17 +62,17 @@ class CategoriesService {
       if (product) {
         return product
       } else {
-        throw Error("Product not found.")
+        throw boom.notFound("Product not found.")
       }
     } else {
-      throw Error("Category not found.")
+      throw boom.notFound("Category not found.")
     }
   }
 
   update(id, changes) {
     const index = this.categories.findIndex(cat => cat.categoryId === id);
     if (index === -1) {
-      throw new Error('Category not found')
+      throw boom.notFound('Category not found')
       }
     const category = this.categories[index];
     this.categories[index] = {
@@ -84,7 +85,7 @@ class CategoriesService {
   delete(id) {
     const index = this.categories.findIndex(item => item.categoryId === id);
     if (index === -1) {
-      throw new Error('Category not found')
+      throw boom.notFound('Category not found')
     }
     this.categories.splice(index, 1)
     return { id };

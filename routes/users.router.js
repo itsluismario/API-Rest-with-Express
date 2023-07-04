@@ -14,10 +14,14 @@ router.get('/', async (req, res) => {
   res.json(users);
 });
 
-router.get('/:id', async (req, res) => {
-  const { id } = req.params;
-  const user = await service.findOne(id);
-  res.json(user)
+router.get('/:id', async (req, res, next) => {
+  try {
+    const { id } = req.params;
+    const user = await service.findOne(id);
+    res.json(user);
+  } catch (error) {
+    next(error);
+  }
 });
 
 router.post('/', async (req, res) => {
@@ -26,27 +30,39 @@ router.post('/', async (req, res) => {
   res.status(201).json(newUser);
 })
 
-router.patch('/:id', async (req, res) => {
-  const { id } = req.params;
-  const body = req.body;
-  const user = await service.update(id, body);
-  res.json(user);
+router.patch('/:id', async (req, res, next) => {
+  try {
+    const { id } = req.params;
+    const body = req.body;
+    const user = await service.update(id, body);
+    res.json(user);
+  } catch (error) {
+    next(error);
+  }
 });
 
-router.put('/:id', async (req, res) => {
-  const { id } = req.params;
-  const body = req.body;
-  res.json({
-    message: 'updated',
-    data: body,
-    id,
-  });
+router.put('/:id', async (req, res, next) => {
+  try {
+    const { id } = req.params;
+    const body = req.body;
+    res.json({
+      message: 'updated',
+      data: body,
+      id,
+    });
+  } catch (error) {
+    next(error);
+  }
 });
 
-router.delete('/:id', async (req, res) => {
-  const { id } = req.params;
-  const response = await service.delete(id);
-  res.json(response);
+router.delete('/:id', async (req, res, next) => {
+  try {
+    const { id } = req.params;
+    const response = await service.delete(id);
+    res.json(response);
+  } catch (error) {
+    next(error);
+  }
 });
 
 module.exports = router;
