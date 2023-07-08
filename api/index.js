@@ -13,7 +13,7 @@ const { logErrors, errorHandler, boomErrorHandler } = require('./middlewares/err
 app.use(express.json());
 
 // -- App has always two params
-app.get('/', (req, res) => {
+app.get('/api', (req, res) => {
   res.send('Hi, my server in express');
 });
 
