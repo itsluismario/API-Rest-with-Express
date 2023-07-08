@@ -63,6 +63,19 @@ class ProductsService {
     return this.products[index];
   }
 
+  partialUpdate(id, changes) {
+    const index = this.products.findIndex(item => item.id === id);
+    if (index === -1) {
+      throw boom.notFound('Product not found');
+      }
+    const product = this.products[index];
+    this.products[index] = {
+      ...product,
+      ...changes
+    }
+    return this.products[index];
+  }
+
   delete(id) {
     const index = this.products.findIndex(item => item.id === id);
     if (index === -1) {

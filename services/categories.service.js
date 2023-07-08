@@ -40,7 +40,6 @@ class CategoriesService {
 
   create(data) {
     const newCategory = {
-      id: faker.string.uuid(),
         ...data
     }
     this.categories.push(newCategory);
@@ -54,7 +53,7 @@ class CategoriesService {
   findOne(categoryId, productId) {
     // Find the category based on categoryId
     const category = this.categories.find(cat => cat.categoryId === categoryId);
-
+    console.log(category);
     if (category) {
       // Find the product based on productId within the found category
       const product = category.products.find(prod => prod.productId === productId);
